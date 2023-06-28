@@ -4,6 +4,7 @@ terraform {
       source = "sysdiglabs/sysdig"
     }
   }
+  backend "s3" {}
 }
 
 variable "sysdig_monitor_api_token" {}

@@ -1,0 +1,33 @@
+name: Apply terraform plan
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    name: Apply terraform plan
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: terraform apply
+        uses: dflook/terraform-apply@v1
+        with:
+          backend_config: |
+            region=${{ secrets.TFSTATE_REGION }}
+            bucket=${{ secrets.TFSTATE_BUCKET }}
+            key=alerts/tfstate
+            access_key=${{ secrets.AWS_ACCESS_KEY_ID }}
+            secret_key=${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          variables: |
+            sysdig_monitor_api_token = "${{ secrets.TF_VAR_SYSDIG_MONITOR_API_TOKEN }}"
+          path: ./

@@ -31,3 +31,4 @@ jobs:
           variables: |
             sysdig_monitor_api_token = "${{ secrets.TF_VAR_SYSDIG_MONITOR_API_TOKEN }}"
           path: ./
+          auto_approve: true

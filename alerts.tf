@@ -5,6 +5,7 @@ terraform {
     }
   }
   backend "s3" {}
+  required_version = ">= 1.2"
 }
 
 variable "sysdig_monitor_api_token" {}
